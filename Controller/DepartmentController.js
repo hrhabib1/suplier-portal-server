@@ -9,6 +9,24 @@ exports.getAllDepartment=async(req, res) => {
         console.log(error);
     }
 }
+exports.getDepartmentById = async (req, res) => {
+    try {
+        const result = await database.pool.query({
+            text: `SELECT * FROM test.departments2
+                   WHERE departments_id = $1`,
+            values:[req.params.id]
+        })
+
+        if(result.rowCount == 0) {
+            return res.status(404).json({ error: "Department Not Found" });
+        }
+
+        return res.status(200).json(result.rows[0]);
+        
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
 
  exports.createDepartment = async(req, res) => {
     try{
