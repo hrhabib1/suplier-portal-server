@@ -131,3 +131,23 @@ exports.createEmployee = async(req, res) => {
         return res.status(500).json({error:error.message})
     }
 }
+
+// single employee
+exports.getEmployeeById = async (req, res) => {
+    try {
+        const result = await database.pool.query({
+            text: `SELECT * FROM test.employees2
+                   WHERE department_id = $1`,
+            values:[req.params.id]
+        })
+
+        if(result.rowCount == 0) {
+            return res.status(404).json({ error: "Employee Not Found" });
+        }
+
+        return res.status(200).json(result.rows);
+        
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
