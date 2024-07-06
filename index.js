@@ -7,6 +7,7 @@ const database = require('./services/database')
 app.use(express.json());
 app.use(cors());
 app.use(require('./Routes/DepartmentRoutes.js'));
+app.use(require('./Routes/EmployeeRoutes.js'));
 
 
 app.get('/', (req, res) => {
