@@ -12,5 +12,8 @@ router.delete('/departments/:departments_id',departmentController.deleteDepartme
 router.get('/employees',departmentController.getAllEmployees )
 router.post('/employees',departmentController.createEmployee )
 router.get('/employees/:id',departmentController.getEmployeeById )
+router.put('/employees/:employees_id',departmentController.updateEmployee )
+
+
 
 module.exports= router;

@@ -52,6 +52,8 @@ exports.getDepartmentById = async (req, res) => {
         return res.status(500).json({error:error.message})
     }
 }
+
+// update department
  exports.updateDepartment = async(req, res) => {
     try{
 
@@ -76,6 +78,8 @@ exports.getDepartmentById = async (req, res) => {
         return res.status(500).json({error:error.message})
     }
 }
+
+// delete department
  exports.deleteDepartment = async(req, res) => {
     try{
         const result = await database.pool.query({
@@ -145,9 +149,40 @@ exports.getEmployeeById = async (req, res) => {
             return res.status(404).json({ error: "Employee Not Found" });
         }
 
-        return res.status(200).json(result.rows);
+        return res.status(200).json(result.rows); 
         
     } catch (error) {
         return res.status(500).json({ error: error.message });
+    }
+}
+
+// update employee
+exports.updateEmployee = async(req, res) => {
+    try{
+
+        if(!req.body.employee_name){
+            return res.status(422).json({error: 'Name is required'})
+        }
+
+        const result = await database.pool.query({
+            text: `UPDATE test.employees2 SET employee_name = $2, first_name = $3, last_name = $4, email = $5, job_title = $6, department_id = $7 
+            WHERE employees_id = $1 RETURNING*`,
+            values:[
+                req.params.employees_id,
+                req.body.employee_name,
+                req.body.first_name,
+                req.body.last_name,
+                req.body.email,
+                req.body.job_title,
+                req.body.department_id,
+            ]
+        })  
+        if(result.rowCount == 0){
+            return res.status(404).json({error: 'employee not found'})
+        }     
+        return res.status(200).json(result.rows[0])
+
+    }catch(error){
+        return res.status(500).json({error:error.message})
     }
 }
