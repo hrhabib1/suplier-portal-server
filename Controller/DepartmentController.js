@@ -67,7 +67,7 @@ exports.getDepartmentById = async (req, res) => {
             values:[
                 req.params.departments_id,
                 req.body.departments_name
-            ]
+            ] 
         })  
         if(result.rowCount ==0){
             return res.status(404).json({error: 'Department not found'})

@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(cors());
 app.use(require('./Routes/DepartmentRoutes.js'));
 app.use(require('./Routes/EmployeeRoutes.js'));
+app.use(require('./Routes/UsertemRoutes.js'));
 
 
 app.get('/', (req, res) => {
