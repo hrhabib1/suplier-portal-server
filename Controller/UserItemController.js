@@ -39,7 +39,7 @@ exports.createUserItem = async (req, res) => {
               item.user_department_id,
               item.user_order,
             ],
-          });
+          }); 
   
           if (updateResult.rows.length > 0) {
             console.log(`Updated user item with user_order ${item.user_order}`);
@@ -80,14 +80,14 @@ exports.deleteUserItem = async(req, res) => {
     try{
         const result = await database.pool.query({
             text: `DELETE FROM test."userItem" WHERE user_order = $1`,
-            values:[
-                req.params.user_order
-            ]
+            values:[  
+                req.params.user_order 
+            ]   
         })  
         if(result.rowCount ==0){
             return res.status(404).json({error: 'user not found'})
         }     
-        return res.status(204).send()
+        return res.status(204).send() 
 
     }catch(error){
         return res.status(500).json({error:error.message})
